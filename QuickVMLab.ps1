@@ -1,29 +1,29 @@
 <#
-	.SYNOPSIS
-		Rapidly provisions Hyper-V VMs from source VHDXs specified by user to quickly make VMs for lab/testing
-	.DESCRIPTION
-		Serves as a tool to rapidly create a specified number of VMs quickly.  The user can specify several basic details such as sourcevhdx to build off of, hostdevice to build on, gen1 or gen2, VMSwitch to attach VM to, basic naming prefix, and destination to place VM/VHDXs at.  Memory is set as a static variable for dynamic RAM of starting 1GB, Max 8GB, min 1GB.  CPU is set as a static variable with 2 vCPU. The primarily purpose of this tool is to simply generate a rapid number of simple VMs off of a source VHDX to quickly start testing/lab work. Only one VHDX can be sourced per run, so only one OS type can be built each run.
-	.PARAMETER NumberOfVms
-		Specify the number of vms you wish to be build.
-	.PARAMETER HostDevice
-		Specify the name of the Hyper-V host you wish to build the VMs on
+    .SYNOPSIS
+        Rapidly provisions Hyper-V VMs from source VHDXs specified by user to quickly make VMs for lab/testing
+    .DESCRIPTION
+        Serves as a tool to rapidly create a specified number of VMs quickly.  The user can specify several basic details such as sourcevhdx to build off of, hostdevice to build on, gen1 or gen2, VMSwitch to attach VM to, basic naming prefix, and destination to place VM/VHDXs at.  Memory is set as a static variable for dynamic RAM of starting 1GB, Max 8GB, min 1GB.  CPU is set as a static variable with 2 vCPU. The primarily purpose of this tool is to simply generate a rapid number of simple VMs off of a source VHDX to quickly start testing/lab work. Only one VHDX can be sourced per run, so only one OS type can be built each run.
+    .PARAMETER NumberOfVms
+        Specify the number of vms you wish to be build.
+    .PARAMETER HostDevice
+        Specify the name of the Hyper-V host you wish to build the VMs on
     .PARAMETER NumberOfVms
         Specify the total number of VMs you wish to create in one run
-	.PARAMETER SourceVHDXPath
-		Specify the location that contains the parent OS VHDX file
-	.PARAMETER Path
-		Specify the file path where you want the new VMs to be placed at
+    .PARAMETER SourceVHDXPath
+        Specify the location that contains the parent OS VHDX file
+    .PARAMETER Path
+        Specify the file path where you want the new VMs to be placed at
     .PARAMETER VMGeneration
         Specify the generation type of the VM (1 or 2)
     .PARAMETER VMSwitchName
         Specify the VMSwitch to associate with the NIC of the VM
     .PARAMETER VMNamePrefix
         This is the beginning of the name of the VM.  Example: Prefix is set as: TestVM --> This results in VMs being built with this sequence based on VM number: ie TestVM-1, TestVM-2, TestVM-3, etc.  This parameter must adhere to normal windows computer name guidelines except that it must also be between 5 and 13 characters.
-	.EXAMPLE
+    .EXAMPLE
         New-QuickVMLab -HostDevice localhost -NumberOfVms 1 -SourceVHDXPath D:\VMBaseImages\2008R2.vhdx -Path C:\ClusterStorage\Volume1\VMs -VMGeneration 1 -VMSwitchName Outbound -VMNamePrefix TestVM
 
         This will build 1 VM on the local device you are running on and source the VHDX from D:\VMBaseImages\2008R2.vhdx.  VMs will be placed in C:\ClusterStorage\Volume1\VMs and will be built as Gen 1 VMs.  They will be attached to VMSwitch Outbound and will carry the prefix of TestVM-$i.  Verbose is not specified so only brief confirmation messaging will be output to the user.
-	.EXAMPLE
+    .EXAMPLE
         New-QuickVMLab -HostDevice HYP2 -NumberOfVms 2 -SourceVHDXPath D:\VMBaseImages\2012R2.vhdx -Path C:\ClusterStorage\Volume1\VMs -VMGeneration 2 -VMSwitchName Outbound -VMNamePrefix TestVM
 
         This will build 2 VMs on HYP2 and source the VHDX from D:\VMBaseImages\2012R2.vhdx.  VMs will be placed in C:\ClusterStorage\Volume1\VMs and will be built as Gen 2 VMs.  They will be attached to VMSwitch Outbound and will carry the prefix of TestVM-$i.  Verbose is not specified so only brief confirmation messaging will be output to the user.
@@ -31,7 +31,7 @@
         New-QuickVMLab -HostDevice HYP1 -NumberOfVms 5 -SourceVHDXPath D:\VMBaseImages\2016.vhdx -Path C:\ClusterStorage\Volume1\VMs -VMGeneration 2 -VMSwitchName Outbound -VMNamePrefix TestVM -Verbose
 
         This will build 5 VMs on HYP1 and source the VHDX from D:\VMBaseImages\2016.vhdx.  VMs will be placed in C:\ClusterStorage\Volume1\VMs and will be built as Gen 2 VMs.  They will be attached to VMSwitch Outbound and will carry the prefix of TestVM-$i.  Verbose is specified so a detailed build process will be output to the user.
-	.NOTES
+    .NOTES
         You can only source one VHDX per execution.  As such you can only build one OS flavor per run.  Varying OS flavors on a single run is not supported.
         Author: Jacob Morrison
         http://techthoughts.info
