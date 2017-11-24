@@ -102,8 +102,13 @@ function New-QuickVMLab {
     if ($SourceVHDXPath.Substring($SourceVHDXPath.Length - 1) -eq "\") {
         $SourceVHDXPath = $SourceVHDXPath.Substring(0, $SourceVHDXPath.Length - 1)
     }
-    #$OSDisk = "\\$HostDevice\$SourceVHDXPath\$osVHDX"
-    $OSDisk = "\\$HostDevice\$SourceVHDXPath"
+    #$OSDisk = "\\$HostDevice\$SourceVHDXPath\$osVHDX"    
+    if ($SourceVHDXPath -notlike "*:" -and $SourceVHDXPath -notlike "*.*.*.*") {
+        $OSDisk = "\\$HostDevice\$SourceVHDXPath"
+    }
+    else {
+        $OSDisk = $SourceVHDXPath
+    }
     Write-Verbose -Message "Checking for source VHDX at: $OSDisk"
     try {
         if (Test-Path $OSDisk) {
